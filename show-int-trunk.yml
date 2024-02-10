@@ -1,0 +1,15 @@
+# Ansible Playbook to show Trunk Interface information on cisco switch(es) 
+---
+
+- name: Show Trunk Interface details
+  hosts: Opus
+  gather_facts: false
+  connection: network_cli
+  
+  tasks:
+  - name: Show Trunk Interface Summary
+    cisco.ios.ios_command:
+      commands:
+      - command: "Show interface trunk"
+    register: print_output
+  - debug: var=print_output.stdout_lines

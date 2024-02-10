@@ -1,0 +1,9 @@
+---
+
+- name: "Print out VLAN information"
+  hosts: SB-SW-01
+  connection: network_cli
+
+  tasks:
+    - name: "Validate VLANs"
+      template: src={{ ansible_network_os }}-vlans.j2 dest=s1.conf

@@ -1,0 +1,17 @@
+---
+# Playbook to show version on IOS devices and save output to file
+
+- hosts: North_Switches
+
+  tasks:
+   - name: Show Version 
+     ios_command: 
+       commands: show version
+     register: version 
+
+   - name: Save output to /home/cisco/host_versions folder
+     copy:
+       content: "{{version.stdout[0]}}"
+       dest: "/home/cisco/host_versions/{{inventory_hostname}}-version.txt"
+
+...

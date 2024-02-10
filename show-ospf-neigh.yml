@@ -1,0 +1,15 @@
+# Ansible Playbook to show state of the ospf neighbors on cisco device 
+---
+
+- name: Show OSPF neighbors
+  hosts: Selby, Opus
+  gather_facts: false
+  connection: network_cli
+  
+  tasks:
+  - name: Show status of the OSPF neighbors 
+    cisco.ios.ios_command:
+      commands:
+      - command: "Show ip ospf neighbor"
+    register: print_output
+  - debug: var=print_output.stdout_lines

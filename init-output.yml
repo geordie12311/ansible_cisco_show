@@ -1,0 +1,24 @@
+# Ansible playbook to gather information from cisco IOS devices about the interfaces and save to a file
+
+---
+- name: Save interface configuration to a file
+  hosts: North_Switches
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: run the show commands listed below
+      ios_command:
+        commands:
+          - show ip int brief
+      register: print_output
+    -  debug: var=print_output.stdout_lines    
+# Task runs show IP interface brief on each device and prints the output
+
+    - name: save output from each host to a file in interface_output folder
+      copy: content="{{ print_output.stdout_lines [0] }}" dest="./interface_output/{{ inventory_hostname }}.txt"
+# Task saves the output from first task and puts it into a folder call "interface_output" and saves the output for each device with relevant hostname.txt
+# Note: The interface_output folder needs to already exist otherwise that task will fail
+
+...
+#final three ... is closure of playbook
