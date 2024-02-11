@@ -5,7 +5,8 @@
   hosts: Opus
   gather_facts: false
   connection: network_cli
-  ansible_python_interpreter: /usr/bin/python3
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   
   tasks:
   - name: Show IP Interface Brief 
